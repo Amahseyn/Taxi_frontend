@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./MapDestination.module.css";
+import AddressAutocomplete from "./AddressAutocomplete";
 
 // Fixed origin: Colchester.
 const ORIGIN = { lng: 0.892, lat: 51.896, label: "Colchester" };
@@ -31,7 +32,8 @@ export default function MapDestination({ onSelect }) {
   useEffect(() => {
     let mounted = true;
     if (window.L) {
-      if (mounted) setLeafletLoaded(true);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync after mount
+      if (!leafletLoaded) setLeafletLoaded(true);
       return;
     }
     const link = document.createElement("link");
@@ -107,11 +109,11 @@ export default function MapDestination({ onSelect }) {
     ).addTo(mapRef.current);
   };
 
-  const computeRoute = async (lat, lng, label) => {
+  async function computeRoute(lat, lng, label) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/route", {
+      const res = await fetch("/api/distance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lat, lng }),
@@ -127,7 +129,7 @@ export default function MapDestination({ onSelect }) {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleGeocode = async (e) => {
     e.preventDefault();
@@ -151,6 +153,14 @@ export default function MapDestination({ onSelect }) {
     }
   };
 
+  // Chosen from the autocomplete dropdown — use its coordinates directly.
+  const handleSuggestionSelect = async (s) => {
+    setAddress(s.label);
+    if (typeof s.lat !== "number" || typeof s.lng !== "number") return;
+    if (mapRef.current) mapRef.current.setView([s.lat, s.lng], 12);
+    await computeRoute(s.lat, s.lng, s.label);
+  };
+
   const estimate = (b) => {
     if (!result) return null;
     const total = Math.round(b.price + result.distanceKm * b.perKm);
@@ -160,13 +170,16 @@ export default function MapDestination({ onSelect }) {
   return (
     <div className={styles.wrap}>
       <form className={styles.searchRow} onSubmit={handleGeocode}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder="Enter destination (e.g. Stansted Airport)"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+        <div className={styles.searchField}>
+          <AddressAutocomplete
+            name="planDestination"
+            className={styles.searchInput}
+            placeholder="Enter destination (e.g. Stansted Airport)"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            onSelect={handleSuggestionSelect}
+          />
+        </div>
         <button type="submit" className={styles.searchBtn} disabled={loading}>
           {loading ? "…" : "Find"}
         </button>

@@ -8,11 +8,21 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1000;
+}
+
+.searchField {
+  flex: 1 1 200px;
+  min-width: 0;
+  position: relative;
+  z-index: 1000;
 }
 
 .searchInput {
   flex: 1 1 200px;
   min-width: 0;
+  width: 100%;
   background: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 8px;

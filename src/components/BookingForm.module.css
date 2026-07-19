@@ -171,3 +171,141 @@
   color: var(--accent-green);
   margin: 0 auto;
 }
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pickMapRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.pickMapBtn {
+  background: transparent;
+  border: none;
+  color: var(--accent-blue);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+}
+
+.pickMapBtn:hover {
+  color: #054b7a;
+}
+
+.routeCard {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.routeLeg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.routeDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.routeDotPickup {
+  background: var(--accent-blue);
+}
+
+.routeDotDest {
+  background: #a60f0a;
+}
+
+.routeLine {
+  width: 2px;
+  height: 16px;
+  background: var(--border-color);
+  margin-left: 5px;
+}
+
+.routeAddr {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.routeStats {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.summaryCard {
+  background: var(--bg-tertiary);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.summaryTotal {
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.summaryTotalValue {
+  color: var(--accent-blue);
+}
+
+.quoteRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.quoteRowSelected {
+  border: 2px solid var(--accent-blue);
+  background: rgba(6, 106, 171, 0.03);
+}
+
+.quoteMeta {
+  text-align: right;
+}
+
+.quotePrice {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-blue);
+}
+
+.quoteSub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}

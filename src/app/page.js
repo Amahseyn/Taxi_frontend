@@ -8,7 +8,6 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import AreasMap from "@/components/AreasMap";
 import Gallery from "@/components/Gallery";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import MapDestination from "@/components/MapDestination";
 
 export default function Home() {
   return (
@@ -26,13 +25,10 @@ export default function Home() {
               </div>
               <div className={styles.heroTextCol}>
                 <h1 className={styles.heroTitle}>
-                  Travel in comfort with <strong>Colchester Airport Taxi, </strong>your trusted local transfer service.
+                  Travel in comfort with <strong>Colchester Airport Taxi,</strong> your trusted local transfer service.
                 </h1>
                 <p className={styles.heroSubtitle}>
-                  Based in <strong>Colchester</strong>, we proudly serve customers across <strong>Essex and surrounding areas</strong>, providing smooth, reliable transfers to <strong>all UK airports, seaports, and cruise terminals</strong>. Whether you&#39;re heading out or coming home, <strong>we&#39;ll make sure you arrive safely and on time</strong>.
-                </p>
-                <p className={styles.heroText}>
-                  <strong>clean, comfortable vehicles</strong> for every journey
+                  Based in <strong>Colchester</strong>, we proudly serve customers across <strong>Essex and surrounding areas</strong>, providing smooth, reliable transfers to <strong>all UK airports, seaports, and cruise terminals</strong>. Whether you're heading out or coming home, we'll make sure you arrive safely and on time. <strong>Clean, comfortable vehicles</strong> for every journey.
                 </p>
                 <a href="#booking-form" className={styles.heroBtn}>
                   <span>Book a ride</span>
@@ -78,17 +74,6 @@ export default function Home() {
             <h2 className={styles.sectionTitle}>Areas We Cover</h2>
           </div>
           <AreasMap />
-        </div>
-      </section>
-
-      {/* Plan your journey — map destination picker */}
-      <section id="plan" className={styles.planSection}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Plan Your Journey</h2>
-            <p className={styles.sectionSubtitle}>Enter your destination or drop a pin on the map to see the distance, estimated travel time, and a fixed price.</p>
-          </div>
-          <MapDestination />
         </div>
       </section>
 

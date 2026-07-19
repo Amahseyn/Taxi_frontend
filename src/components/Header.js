@@ -12,12 +12,12 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Brand Logo */}
+        {/* Brand Logo - comes first (left side) */}
         <Link href="/" className={styles.logo}>
           <img src="/site-logo.png" alt="Colchester Airport Taxi" className={styles.logoImg} />
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - comes after logo (right side) */}
         <nav className={styles.nav} aria-label="Main Menu">
           <ul className={styles.menu}>
             <li className={styles.menuItem}>

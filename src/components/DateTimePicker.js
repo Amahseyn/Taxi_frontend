@@ -17,6 +17,31 @@ function toISO(y, m, d) {
   return `${y}-${pad(m + 1)}-${pad(d)}`;
 }
 
+function parseTypedTime(raw) {
+  const text = (raw || "").trim().toLowerCase().replace(/\s+/g, "");
+  if (!text) return null;
+  let h = 0;
+  let m = 0;
+  let isPm = false;
+  const mer = text.match(/(am|pm|a|p)$/);
+  let cleaned = text;
+  if (mer) {
+    isPm = mer[1].startsWith("p");
+    cleaned = text.slice(0, mer.index);
+  }
+  const range24 = cleaned.match(/^(\d{1,2})(?::|\.)?(\d{0,2})$/);
+  if (range24) {
+    h = parseInt(range24[1], 10);
+    m = parseInt(range24[2] || "0", 10);
+  } else {
+    return null;
+  }
+  if (Number.isNaN(h) || Number.isNaN(m) || h > 23 || m > 59) return null;
+  if (isPm && h < 12) h += 12;
+  if (!isPm && h === 12) h = 0;
+  return `${pad(h)}:${pad(m)}`;
+}
+
 function startOfToday() {
   const t = new Date();
   t.setHours(0, 0, 0, 0);
@@ -45,6 +70,7 @@ export default function DateTimePicker({
 }) {
   const [openCal, setOpenCal] = useState(false);
   const [openTime, setOpenTime] = useState(false);
+  const [timeText, setTimeText] = useState("");
   const [viewMonth, setViewMonth] = useState(() => {
     const d = dateValue ? new Date(dateValue) : new Date();
     return { y: d.getFullYear(), m: d.getMonth() };
@@ -202,6 +228,41 @@ export default function DateTimePicker({
       {/* Time popup */}
       {openTime && (
         <div className={styles.timePopup} role="listbox" aria-label="Choose time">
+          <div className={styles.timeInputRow}>
+            <input
+              type="text"
+              className={styles.timeInput}
+              inputMode="text"
+              placeholder="e.g. 14:30 or 2:30pm"
+              value={timeText}
+              onChange={(e) => setTimeText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const parsed = parseTypedTime(timeText);
+                  if (parsed) {
+                    onTimeChange({ target: { name: timeName, value: parsed } });
+                    setTimeText("");
+                    setOpenTime(false);
+                  }
+                }
+              }}
+            />
+            <button
+              type="button"
+              className={styles.timeApply}
+              onClick={() => {
+                const parsed = parseTypedTime(timeText);
+                if (parsed) {
+                  onTimeChange({ target: { name: timeName, value: parsed } });
+                  setTimeText("");
+                  setOpenTime(false);
+                }
+              }}
+            >
+              Set
+            </button>
+          </div>
           <div className={styles.timeScroller} ref={timeScrollerRef}>
             {slots.map((slot) => {
               const active = slot === timeValue;

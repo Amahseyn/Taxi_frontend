@@ -5,6 +5,7 @@
   --accent-blue: #066aab;
   --accent-light-blue: #227bf7;
   --accent-green: #119849;
+  --accent-gold: #fad416;
   --text-primary: #262626;
   --text-secondary: #444444;
   --text-muted: #7f7f7f;
@@ -12,7 +13,8 @@
   --btn-bg: #000000db;
   --btn-bg-hover: #000000;
   --transition-smooth: all 0.25s ease-in-out;
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 * {

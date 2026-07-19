@@ -3,28 +3,28 @@
   top: 0;
   z-index: 100;
   background: #ffffff;
-  border-bottom: 1px solid var(--border-color);
-  transition: var(--transition-smooth);
 }
 
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 24px;
-  height: 90px;
+  height: 60px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 10px;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  margin-left: -50px;
+  margin-right: auto;
 }
 
 .logoImg {
-  height: 50px;
+  height: 36px;
   width: auto;
   object-fit: contain;
 }
@@ -163,7 +163,7 @@
 
 .mobileMenu {
   position: fixed;
-  top: 90px;
+  top: 60px;
   left: 0;
   right: 0;
   background: #ffffff;

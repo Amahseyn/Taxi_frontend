@@ -1,9 +1,9 @@
-// Server Route Handler — geocode a free-text address via OpenRouteService.
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const key = process.env.OPENROUTE_SERVICE_API_KEY;
-  if (!key) {
+  const orsKey = process.env.OPENROUTE_SERVICE_API_KEY;
+
+  if (!orsKey) {
     return NextResponse.json({ error: "Routing service not configured." }, { status: 500 });
   }
 
@@ -19,12 +19,16 @@ export async function POST(request) {
     return NextResponse.json({ error: "A query string is required." }, { status: 400 });
   }
 
-  const url = `https://api.openrouteservice.org/geocode/search?api_key=${encodeURIComponent(key)}&text=${encodeURIComponent(query)}&size=1&boundary.country=GB`;
-
+  // OpenRouteService Geocoding — single source of truth for address lookup.
+  const url = `https://api.openrouteservice.org/geocode/search?api_key=${encodeURIComponent(orsKey)}&text=${encodeURIComponent(query)}&size=1&boundary.country=GB`;
   try {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {
-      return NextResponse.json({ error: "Geocode request failed." }, { status: res.status });
+      const detail = await res.text();
+      return NextResponse.json(
+        { error: "Geocode request failed.", detail: detail.slice(0, 300) },
+        { status: res.status }
+      );
     }
     const data = await res.json();
     const feature = data?.features?.[0];
@@ -32,8 +36,19 @@ export async function POST(request) {
       return NextResponse.json({ error: "No matching location found." }, { status: 404 });
     }
     const [lng, lat] = feature.geometry.coordinates;
-    const label = feature.properties?.label || query;
-    return NextResponse.json({ lng, lat, label });
+    const p = feature.properties || {};
+    const label = p.label || query;
+    const postal = p.postalcode || "";
+    return NextResponse.json({
+      lng,
+      lat,
+      label,
+      postal,
+      street: p.street || "",
+      housenumber: p.housenumber || "",
+      city: p.locality || p.localadmin || p.county || "",
+      region: p.region || p.macroregion || "",
+    });
   } catch (err) {
     return NextResponse.json({ error: "Geocode error.", detail: String(err) }, { status: 500 });
   }
