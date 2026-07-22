@@ -214,7 +214,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(yoastSchema) }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {/* GTM Noscript (fallback for disabled Javascript) */}
         <noscript>
           <iframe

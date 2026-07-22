@@ -62,7 +62,10 @@ export default function AdminDrivers() {
     <div style={{ padding: "28px", maxWidth: "1000px", margin: "0 auto", background: "#fafbfc", minHeight: "100vh" }}>
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px", paddingBottom: "14px", borderBottom: "1px solid #e0e0e0" }}>
         <h1 style={{ fontSize: "26px", fontWeight: "700", margin: 0, color: "#222" }}>Drivers</h1>
-        <button onClick={() => router.push("/admin/dashboard")} style={{ padding: "10px 20px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", background: "#fff", cursor: "pointer" }}>← Back to Dashboard</button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button onClick={() => router.push("/admin/drivers/create")} style={{ padding: "10px 20px", fontSize: "14px", border: "none", borderRadius: "8px", background: "#066aab", color: "#fff", cursor: "pointer", fontWeight: "500" }}>+ Add Driver</button>
+          <button onClick={() => router.push("/admin/dashboard")} style={{ padding: "10px 20px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", background: "#fff", cursor: "pointer" }}>← Back to Dashboard</button>
+        </div>
       </header>
 
       {errorMsg && <div style={{ padding: "10px 16px", background: "#ffebee", color: "#c62828", borderRadius: "8px", fontSize: "13px", marginBottom: "16px" }}>{errorMsg}</div>}
@@ -89,12 +92,13 @@ export default function AdminDrivers() {
               <th style={{ padding: "14px 16px", textAlign: "left", fontWeight: "600", color: "#555" }}>Contact</th>
               <th style={{ padding: "14px 16px", textAlign: "left", fontWeight: "600", color: "#555" }}>Vehicle</th>
               <th style={{ padding: "14px 16px", textAlign: "left", fontWeight: "600", color: "#555" }}>Status</th>
+              <th style={{ padding: "14px 16px", textAlign: "left", fontWeight: "600", color: "#555" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {drivers.map((d) => (
               <tr key={d.id} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                <td style={{ padding: "14px 16px", fontWeight: "500", color: "#222" }}>{d.name}</td>
+                <td style={{ padding: "14px 16px", fontWeight: "500", color: "#066aab", cursor: "pointer", textDecoration: "underline" }} onClick={() => setSelectedDriver(d)}>{d.name}</td>
                 <td style={{ padding: "14px 16px", color: "#555" }}>{d.phone}{d.email && <><br /><span style={{ color: "#888", fontSize: "12px" }}>{d.email}</span></>}</td>
                 <td style={{ padding: "14px 16px", color: "#555" }}>
                   {d.vehicle ? <><span style={{ fontWeight: "500" }}>{d.vehicle.make} {d.vehicle.model}</span><br /><span style={{ color: "#888", fontSize: "12px" }}>{d.vehicle.class} • {d.vehicle.registration_number}</span></> : "—"}
@@ -106,9 +110,13 @@ export default function AdminDrivers() {
                     color: d.status === "available" ? "#2e7d32" : d.status === "busy" ? "#ff8f00" : "#777"
                   }}>{d.status}</span>
                 </td>
+                <td style={{ padding: "14px 16px" }}>
+                  <button onClick={() => router.push(`/admin/drivers/${d.id}`)} style={{ padding: "6px 12px", fontSize: "12px", border: "1px solid #066aab", borderRadius: "6px", background: "#fff", color: "#066aab", cursor: "pointer", marginRight: "6px" }}>Edit</button>
+                  <button onClick={() => handleDeactivate(d.id)} style={{ padding: "6px 12px", fontSize: "12px", border: "1px solid #c62828", borderRadius: "6px", background: "#fff", color: "#c62828", cursor: "pointer" }}>Deactivate</button>
+                </td>
               </tr>
             ))}
-            {drivers.length === 0 && <tr><td colSpan="4" style={{ padding: "40px", textAlign: "center", color: "#888" }}>No drivers found</td></tr>}
+            {drivers.length === 0 && <tr><td colSpan="5" style={{ padding: "40px", textAlign: "center", color: "#888" }}>No drivers found</td></tr>}
           </tbody>
         </table>
       </div>
