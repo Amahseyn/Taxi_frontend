@@ -29,8 +29,27 @@ jobs:
           port: 22
           script: |
             set -e
-            cd /home/Taxi/Taxi_frontend
-            git pull origin main
+
+            DEPLOY_DIR="/home/Taxi/Taxi_frontend"
+
+            git config --global --add safe.directory "$DEPLOY_DIR"
+
+            if [ ! -d "$DEPLOY_DIR/.git" ]; then
+              git clone "${{ github.server_url }}/${{ github.repository }}.git" "$DEPLOY_DIR"
+            fi
+
+            cd "$DEPLOY_DIR"
+            git fetch origin
+            git reset --hard origin/main
+
+            if [ ! -f ".env.local" ]; then
+              cat > .env.local << EOL
+OPENROUTE_SERVICE_API_KEY="${{ secrets.OPENROUTE_SERVICE_API_KEY }}"
+EOL
+            fi
+
             npm ci
             npm run build
+
             pm2 startOrReload ecosystem.config.js
+            pm2 save
