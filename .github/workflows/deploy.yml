@@ -30,7 +30,6 @@ jobs:
           script: |
             set -e
             cd /home/Taxi/Taxi_frontend
-            sudo chown -R deploy:deploy /home/Taxi/Taxi_frontend
             git pull origin main
             npm ci
             npm run build
