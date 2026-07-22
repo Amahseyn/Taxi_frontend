@@ -36,7 +36,7 @@ export const metadata = {
     siteName: "Colchester Airport Taxi",
     images: [
       {
-        url: "https://colchester-airport-taxi.co.uk/wp-content/uploads/2025/10/logo512-1.png",
+        url: "/favicon.png",
         width: 512,
         height: 512,
         type: "image/png",
@@ -47,9 +47,9 @@ export const metadata = {
     card: "summary_large_image",
   },
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon-512.png",
-    apple: "/favicon-512.png",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 
@@ -130,8 +130,8 @@ export default function RootLayout({ children }) {
           "@type": "ImageObject",
           "inLanguage": "en-GB",
           "@id": "https://colchester-airport-taxi.co.uk/#/schema/logo/image/",
-          "url": "https://colchester-airport-taxi.co.uk/wp-content/uploads/2025/10/logo512-1.png",
-          "contentUrl": "https://colchester-airport-taxi.co.uk/wp-content/uploads/2025/10/logo512-1.png",
+          "url": "/favicon.png",
+          "contentUrl": "/favicon.png",
           "width": 512,
           "height": 512,
           "caption": "Colchester Airport Taxi"
@@ -150,10 +150,8 @@ export default function RootLayout({ children }) {
     <html lang="en-GB" className={`no-js ${plusJakartaSans.variable}`}>
       <head>
         <link rel="stylesheet" href="/font-awesome.min.css" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
